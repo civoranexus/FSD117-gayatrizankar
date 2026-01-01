@@ -2,33 +2,48 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import logo from "../assets/civora-logo.png";
 
-const VendorLogin = () => {
+const VendorSignup = () => {
   const navigate = useNavigate();
 
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleLogin = () => {
-    if (!email || !password) {
-      alert("Please enter email and password");
+  const handleSignup = () => {
+    if (!name || !email || !password) {
+      alert("All fields are required");
       return;
     }
 
     const vendors = JSON.parse(localStorage.getItem("vendors")) || [];
 
-    const vendor = vendors.find(
-      (v) => v.email === email && v.password === password
+    const alreadyExists = vendors.some(
+      (v) => v.email === email
     );
 
-    if (!vendor) {
-      alert("Invalid credentials");
+    if (alreadyExists) {
+      alert("Vendor already exists. Please login.");
+      navigate("/vendor/login");
       return;
     }
 
-    // Save logged-in vendor (IMPORTANT)
+    const newVendor = {
+      id: Date.now(),
+      name,
+      email,
+      password,
+      products: [], // IMPORTANT for persistence
+    };
+
+    vendors.push(newVendor);
+
+    // Save vendors list
+    localStorage.setItem("vendors", JSON.stringify(vendors));
+
+    // Auto login after signup
     localStorage.setItem(
       "currentVendor",
-      JSON.stringify(vendor)
+      JSON.stringify(newVendor)
     );
 
     navigate("/vendor/dashboard");
@@ -36,13 +51,20 @@ const VendorLogin = () => {
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-background px-4 sm:px-8">
-              <img src={logo} alt="Civora Logo" className="w-40 sm:w-48 mb-8 sm:mb-12" />
-      
+        <img src={logo} alt="Civora Logo" className="w-40 sm:w-48 mb-8 sm:mb-12" />
       <h1 className="text-3xl font-bold text-navyCore mb-8">
-        Vendor Login
+        Vendor Signup
       </h1>
 
       <div className="bg-surface p-8 rounded-2xl shadow-lg w-full max-w-md">
+        <input
+          type="text"
+          placeholder="Name"
+          className="w-full p-3 mb-4 border rounded-lg"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        />
+
         <input
           type="email"
           placeholder="Email"
@@ -60,19 +82,19 @@ const VendorLogin = () => {
         />
 
         <button
-          onClick={handleLogin}
+          onClick={handleSignup}
           className="w-full bg-primaryTeal text-white p-3 rounded-lg hover:bg-tealDark transition"
         >
-          Login
+          Create Account
         </button>
 
         <p className="text-center text-sm text-textDark mt-4">
-          Don’t have an account?{" "}
+          Already have an account?{" "}
           <span
-            onClick={() => navigate("/vendor/signup")}
+            onClick={() => navigate("/vendor/login")}
             className="text-primaryTeal cursor-pointer font-semibold"
           >
-            Sign up
+            Login
           </span>
         </p>
       </div>
@@ -80,4 +102,4 @@ const VendorLogin = () => {
   );
 };
 
-export default VendorLogin;
+export default VendorSignup;

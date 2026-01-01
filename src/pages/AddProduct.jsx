@@ -1,24 +1,30 @@
 // AddProduct.jsx
 import React, { useState } from "react";
-import { QRCodeCanvas } from "qrcode.react"; // Use only this
+import { QRCodeCanvas } from "qrcode.react";
 
-const AddProduct = ({ onAdd }) => {
+const AddProduct = ({ onAdd, vendor }) => {
   const [productName, setProductName] = useState("");
+  const [price, setPrice] = useState("");
   const [qrValue, setQrValue] = useState("");
 
   const handleGenerate = () => {
-    if (!productName) return;
-    const token = `${productName}-${Date.now()}`; // unique code
-    setQrValue(token);
+    if (!productName || !price) return;
 
-    // Send product to parent dashboard
-    onAdd({
+    const token = `VV-${Date.now()}-${Math.floor(Math.random() * 10000)}`;
+
+    const product = {
       name: productName,
+      price,
       code: token,
-      qr: token // QR image generated in ProductCard
-    });
+      createdBy: vendor.email,
+      createdAt: new Date().toLocaleString(),
+    };
 
-    setProductName(""); // reset form
+    setQrValue(token);
+    onAdd(product);
+
+    setProductName("");
+    setPrice("");
   };
 
   return (
@@ -26,10 +32,19 @@ const AddProduct = ({ onAdd }) => {
       <input
         type="text"
         placeholder="Product Name"
-        className="w-full p-3 mb-4 border rounded-lg"
+        className="w-full p-3 mb-3 border rounded-lg"
         value={productName}
         onChange={(e) => setProductName(e.target.value)}
       />
+
+      <input
+        type="number"
+        placeholder="Price"
+        className="w-full p-3 mb-4 border rounded-lg"
+        value={price}
+        onChange={(e) => setPrice(e.target.value)}
+      />
+
       <button
         onClick={handleGenerate}
         className="w-full bg-primaryTeal text-white p-3 rounded-lg hover:bg-tealDark transition"
@@ -40,7 +55,7 @@ const AddProduct = ({ onAdd }) => {
       {qrValue && (
         <div className="mt-4 text-center">
           <QRCodeCanvas value={qrValue} size={150} />
-          <p className="mt-2 text-textDark font-semibold">{qrValue}</p>
+          <p className="mt-2 text-textDark text-sm">{qrValue}</p>
         </div>
       )}
     </div>
