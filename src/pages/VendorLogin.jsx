@@ -25,7 +25,6 @@ const VendorLogin = () => {
       return;
     }
 
-    // Save logged-in vendor (IMPORTANT)
     localStorage.setItem(
       "currentVendor",
       JSON.stringify(vendor)
