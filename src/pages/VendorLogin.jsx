@@ -1,3 +1,4 @@
+//THIS IS VENDOR LOGIN PAGE
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import logo from "../assets/civora-logo.png";
