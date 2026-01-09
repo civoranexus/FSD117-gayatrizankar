@@ -1,6 +1,7 @@
-// AddProduct.jsx
+// AddProduct
 import React, { useState } from "react";
 import { QRCodeCanvas } from "qrcode.react";
+
 
 const AddProduct = ({ onAdd, vendor }) => {
   const [productName, setProductName] = useState("");
