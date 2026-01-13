@@ -1,17 +1,17 @@
-import React, { useState } from "react";
-import { QrReader } from "react-qr-reader";
+import React, { useEffect, useState } from "react";
+import { Html5QrcodeScanner } from "html5-qrcode";
+import logo from "../assets/civora-logo.png";
 
+//IN THIS PAGE CONSUMER CAN SCAN THE QR CODE
 const ConsumerScan = () => {
   const [product, setProduct] = useState(null);
   const [status, setStatus] = useState(null);
-  const [manualCode, setManualCode] = useState("");
 
   const verifyQRCode = (code) => {
     const vendors = JSON.parse(localStorage.getItem("vendors")) || [];
 
     for (let vendor of vendors) {
       const found = vendor.products?.find((p) => p.code === code);
-
       if (found) {
         setProduct(found);
         setStatus("valid");
@@ -23,38 +23,45 @@ const ConsumerScan = () => {
     setStatus("invalid");
   };
 
+  useEffect(() => {
+    const scanner = new Html5QrcodeScanner(
+      "reader",
+      {
+        fps: 10,
+        qrbox: 250,
+      },
+      false
+    );
+
+    scanner.render(
+      (decodedText) => {
+        verifyQRCode(decodedText);
+      },
+      () => {}
+    );
+
+    return () => {
+      scanner.clear().catch(() => {});
+    };
+  }, []);
+
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center px-4">
-      <h1 className="text-3xl font-bold mb-6">Scan Product QR</h1>
+    <div className="min-h-screen flex flex-col items-center justify-center px-4 bg-background py-6">
 
-      {/* Camera */}
-      <div className="w-full max-w-md bg-white p-4 rounded-xl shadow">
-        <QrReader
-          constraints={{ facingMode: "environment" }}
-          onResult={(result) => {
-            if (result?.text) {
-              verifyQRCode(result.text);
-            }
-          }}
-          videoStyle={{ width: "100%" }}
-        />
-      </div>
+      <img
+        src={logo}
+        alt="Civora Logo"
+        className="w-40 sm:w-48 mb-8 sm:mb-12"
+      />
 
-      {/* Manual fallback */}
-      <div className="mt-4 w-full max-w-md">
-        <input
-          type="text"
-          placeholder="Enter QR code manually"
-          className="w-full p-3 border rounded-lg"
-          value={manualCode}
-          onChange={(e) => setManualCode(e.target.value)}
-        />
-        <button
-          onClick={() => verifyQRCode(manualCode)}
-          className="mt-2 w-full bg-primaryTeal text-white p-2 rounded-lg"
-        >
-          Verify
-        </button>
+      <h1 className="text-3xl font-bold mb-6 text-navyCore">
+        Scan Product QR
+      </h1>
+
+      {/* ⚠️ DO NOT TOUCH THIS DIV */}
+      {/* html5-qrcode injects ALL that huge HTML here */}
+      <div className="w-full max-w-md bg-surface p-4 rounded-xl shadow mb-4">
+        <div id="reader" />
       </div>
 
       {/* RESULT */}
@@ -71,7 +78,7 @@ const ConsumerScan = () => {
       )}
 
       {status === "invalid" && (
-        <div className="mt-6 bg-red-600 text-white p-4 rounded-xl">
+        <div className="mt-6 bg-red-600 text-white p-4 rounded-xl text-center w-full max-w-md">
           ❌ Invalid or Fake QR Code
         </div>
       )}
