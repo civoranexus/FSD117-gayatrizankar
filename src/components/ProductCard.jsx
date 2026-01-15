@@ -1,6 +1,6 @@
 import React from "react";
 import { QRCodeCanvas } from "qrcode.react";
-
+//this is product card component
 const ProductCard = ({ product }) => {
   return (
     <div className="bg-surface border-2 border-primaryTeal rounded-2xl p-6 shadow-lg">
