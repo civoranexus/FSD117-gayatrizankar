@@ -1,5 +1,6 @@
 // components/Navbar.jsx
 import React from "react";
+// CHANGES IN NAVBAR 
 //THIS IS NAVBAR 
 
 const Navbar = ({ title, onAddToggle, onLogout, showAdd }) => {
