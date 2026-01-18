@@ -6,6 +6,7 @@ import ConsumerScan from "./pages/ConsumerScan";
 import VendorSignup from "./pages/VendorSignup";
 import AdminLogin from "./pages/AdminLogin";
 import AdminDashboard from "./pages/AdminDashboard";  
+// THIS IS FINAL APP.JS
 
 function App() {
   return (
