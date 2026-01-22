@@ -3,6 +3,7 @@ import { Html5QrcodeScanner } from "html5-qrcode";
 import logo from "../assets/civora-logo.png";
 
 //IN THIS PAGE CONSUMER CAN SCAN THE QR CODE
+
 const ConsumerScan = () => {
   const [product, setProduct] = useState(null);
   const [status, setStatus] = useState(null);
