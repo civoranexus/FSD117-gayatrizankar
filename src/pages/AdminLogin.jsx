@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import logo from "../assets/civora-logo.png";
 
-//THIS IS ADMIN LOGIN PAGE
+//changes in admin login page 
 
 const AdminLogin = () => {
   const [email, setEmail] = useState("");
