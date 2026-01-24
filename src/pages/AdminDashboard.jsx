@@ -3,6 +3,8 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import logo from "../assets/civora-logo.png";
 
+
+//ADMIN DASHBOARD PAGE
 const AdminDashboard = () => {
   const navigate = useNavigate();
   const [vendors, setVendors] = useState([]);
