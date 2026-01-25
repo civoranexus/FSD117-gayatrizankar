@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Html5QrcodeScanner } from "html5-qrcode";
 import logo from "../assets/civora-logo.png";
 
-//IN THIS PAGE CONSUMER CAN SCAN THE QR CODE
+//this are changes in consumerscan 
 
 const ConsumerScan = () => {
   const [product, setProduct] = useState(null);
