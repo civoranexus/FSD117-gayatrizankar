@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import { QRCodeCanvas } from "qrcode.react";
 
+//THIS IS THE CHANGES IN ADDPRODUCT
 
 const AddProduct = ({ onAdd, vendor }) => {
   const [productName, setProductName] = useState("");
