@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import logo from "../assets/civora-logo.png";
 
+//chnages in vendor login page
 const VendorLogin = () => {
   const navigate = useNavigate();
 
