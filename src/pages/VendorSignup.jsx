@@ -1,5 +1,5 @@
 
-//THIS IS VENDOR SIGNUP PAGE
+//THIS ARE THE CHANGES IN  VENDOR SIGNUP PAGE
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import logo from "../assets/civora-logo.png";
